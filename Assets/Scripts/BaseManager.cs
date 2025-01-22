@@ -35,6 +35,9 @@ public abstract class BaseManager<T> where T: class // , new()
 {
     private static T instance;
 
+    // 用于加锁的对象
+    protected static readonly object lockObj = new object();
+
     // 通过属性获取实例 任选其一
     public static T Instance
     {
@@ -42,21 +45,27 @@ public abstract class BaseManager<T> where T: class // , new()
         {
             if (instance == null)
             {
-                // instance = new T();
+                lock (lockObj)
+                {
+                    if (instance == null)
+                    {
+                        // instance = new T();
 
-                // 利用反射得到私有的无参构造函数, 以此实例化对象
-                Type type = typeof(T);
-                ConstructorInfo info =  type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, 
-                                                            null, 
-                                                            Type.EmptyTypes, 
-                                                            null);
-                if (info != null)
-                {
-                    instance = info.Invoke(null) as T;
-                }
-                else
-                {
-                    Debug.LogError("The constructor is not found!");
+                        // 利用反射得到私有的无参构造函数, 以此实例化对象
+                        Type type = typeof(T);
+                        ConstructorInfo info = type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
+                                                                    null,
+                                                                    Type.EmptyTypes,
+                                                                    null);
+                        if (info != null)
+                        {
+                            instance = info.Invoke(null) as T;
+                        }
+                        else
+                        {
+                            Debug.LogError("The constructor is not found!");
+                        }
+                    }
                 }
             }
             return instance;

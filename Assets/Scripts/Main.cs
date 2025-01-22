@@ -20,10 +20,4 @@ public class Main : MonoBehaviour
         Test2Mgr2.Instance.TestLog();
         #endregion
     }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
 }
