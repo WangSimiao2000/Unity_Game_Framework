@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// 继承MonoBehaviour的单例基类(挂载在场景中的GameObject上)
+// 继承MonoBehaviour的单例基类(手动挂载在场景中的GameObject上)
 
 #region 注意: 挂载式的单例基类
 // 1. 不能使用new()来实例化, 因为MonoBehaviour的实例化是通过Unity引擎来实现的
@@ -16,6 +16,13 @@ using UnityEngine;
 // 3. 用脚本动态添加多个该脚本, 也会破坏单例的唯一性
 #endregion
 
+#region 解决方案
+// 1. 同一个GameObject上挂载多个: 为脚本添加特性[DisallowMultipleComponent]
+// 2. 多个GameObject上挂载: 判断如果存在对象, 则移除脚本
+#endregion
+
+// 不允许在同一个GameObject上挂载多个该脚本
+[DisallowMultipleComponent]
 public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
 {
     private static T instance;
@@ -30,6 +37,15 @@ public class SingletonMono<T> : MonoBehaviour where T : MonoBehaviour
 
     protected virtual void Awake()
     {
+        // 如果已经存在单例模式对象实例, 则销毁当前实例
+        if (instance != null)
+        {
+            Destroy(this); // 不用Destroy(this.gameObject), 因为只需要移除脚本即可
+            return;
+        }
         instance = this as T;
+        // 挂载继承此单例基类脚本时, 依附的对象在切换场景时不会被销毁
+        // 可以保证在游戏整个生命周期中, 单例类的唯一性
+        DontDestroyOnLoad(this.gameObject);
     }
 }
