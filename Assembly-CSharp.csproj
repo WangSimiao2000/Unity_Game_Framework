@@ -61,9 +61,13 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="Assets\Scripts\Lesson01\TestMgr.cs" />
+    <Compile Include="Assets\Scripts\Main.cs" />
+    <Compile Include="Assets\Scripts\Lesson02\Test2Mgr2.cs" />
     <Compile Include="Assets\Scripts\Lesson01\BaseManager.cs" />
+    <Compile Include="Assets\Scripts\Lesson02\SingletonAutoMono.cs" />
     <Compile Include="Assets\Scripts\Lesson01\TestMgr2.cs" />
-    <Compile Include="Assets\Scripts\Lesson01\Main.cs" />
+    <Compile Include="Assets\Scripts\Lesson02\Test2Mgr.cs" />
+    <Compile Include="Assets\Scripts\Lesson02\SingletonMono.cs" />
   </ItemGroup>
   <ItemGroup>
     <Reference Include="UnityEngine">

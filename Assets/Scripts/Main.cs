@@ -9,6 +9,9 @@ public class Main : MonoBehaviour
     {
         TestMgr.Instance.TestLog();
         TestMgr2.Instance.TestLog();
+        
+        Test2Mgr.Instance.TestLog();
+        Test2Mgr2.Instance.TestLog();
     }
 
     // Update is called once per frame
