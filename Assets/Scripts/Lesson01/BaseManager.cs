@@ -1,3 +1,5 @@
+using System;
+using System.Reflection;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -18,7 +20,18 @@ using UnityEngine;
 // 2. 多个线程同时访问同一个单例类的情况时, 可能会出现共享资源的安全问题
 #endregion
 
-public class BaseManager<T> where T: class, new()
+#region 解决方案
+// 1. 将父类变为抽象类, 抽象类是不能被new的
+// 2. 规定, 继承单例模式基类的类, 必须显式地实现私有的无参构造函数
+// 3. 在基类中通过反射来调用私有的无参构造函数, 以此实例化对象 (使用Type类的GetConstructor()方法)
+// ConstructorInfo constructor = typeof(T).GetConstructor(
+// BindingFlags.Instance | BindingFlags.NonPublic,  // 表示成员私有方法(Instance)和非公共方法(NonPublic): 因为无参构造函数是私有的
+// null,                                            // 表示不需要绑定对象
+// Type.EmptyTypes,                                 // 表示没有参数
+// null);                                           // 表示没有参数修饰符(如out, ref)
+#endregion
+
+public abstract class BaseManager<T> where T: class // , new()
 {
     private static T instance;
 
@@ -29,7 +42,22 @@ public class BaseManager<T> where T: class, new()
         {
             if (instance == null)
             {
-                instance = new T();
+                // instance = new T();
+
+                // 利用反射得到私有的无参构造函数, 以此实例化对象
+                Type type = typeof(T);
+                ConstructorInfo info =  type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic, 
+                                                            null, 
+                                                            Type.EmptyTypes, 
+                                                            null);
+                if (info != null)
+                {
+                    instance = info.Invoke(null) as T;
+                }
+                else
+                {
+                    Debug.LogError("The constructor is not found!");
+                }
             }
             return instance;
         }
