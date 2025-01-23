@@ -16,7 +16,7 @@ public class TestMgr: BaseManager<TestMgr>
 
     public void AddData(object data)
     {
-        lock (lockObj) // 基类中定义的加锁对象
+        lock (lockObj) // 鍩虹被涓畾涔夌殑鍔犻攣瀵硅薄
         {
             list.Add(data);
         }

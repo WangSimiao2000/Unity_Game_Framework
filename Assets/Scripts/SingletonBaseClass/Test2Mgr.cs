@@ -8,7 +8,7 @@ public class Test2Mgr : SingletonMono<Test2Mgr>
 
     protected override void Awake()
     {
-        base.Awake(); // ÖØĞ´Ê±, Ò»¶¨Òªµ÷ÓÃ»ùÀàµÄAwake()
+        base.Awake(); // é‡å†™æ—¶, ä¸€å®šè¦è°ƒç”¨åŸºç±»çš„Awake()
         i = 10;
     }
 

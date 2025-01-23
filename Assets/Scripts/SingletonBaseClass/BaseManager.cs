@@ -4,41 +4,41 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-// ÓÃ·ºĞÍÀ´ÊµÏÖËùÓĞManagerµÄ»ùÀà
+// ç”¨æ³›å‹æ¥å®ç°æ‰€æœ‰Managerçš„åŸºç±»
 
-#region ×÷ÓÃ
-// 1. Ö÷Òª±ÜÃâ´úÂëÈßÓà
-// 2. ·ºĞÍÎª¿É±äµÄ, ËùÒÔ¿ÉÒÔÓÃÀ´ÊµÏÖËùÓĞManagerµÄ»ùÀà
+#region ä½œç”¨
+// 1. ä¸»è¦é¿å…ä»£ç å†—ä½™
+// 2. æ³›å‹ä¸ºå¯å˜çš„, æ‰€ä»¥å¯ä»¥ç”¨æ¥å®ç°æ‰€æœ‰Managerçš„åŸºç±»
 #endregion
 
-#region ×¢Òâ
-// ÏŞÖÆ·ºĞÍT±ØĞëÊÇÀà£¬ÇÒ±ØĞëÓĞÒ»¸öÎŞ²Î¹¹Ôìº¯Êı, ÒÔ±ãÔÚInstanceÊôĞÔÖĞÊµÀı»¯
+#region æ³¨æ„
+// é™åˆ¶æ³›å‹Tå¿…é¡»æ˜¯ç±»ï¼Œä¸”å¿…é¡»æœ‰ä¸€ä¸ªæ— å‚æ„é€ å‡½æ•°, ä»¥ä¾¿åœ¨Instanceå±æ€§ä¸­å®ä¾‹åŒ–
 # endregion
 
-#region Ç±ÔÚÎÊÌâ
-// 1. ¿ÉÄÜ»áÓĞ³öÏÖÔÚ±ğµÄµØ·½ new() Ò»¸öµ¥ÀıÀàµÄÇé¿ö, µ«ÊÇÕâÑù»áÆÆ»µµ¥ÀıµÄÔ­Ôò
-// 2. ¶à¸öÏß³ÌÍ¬Ê±·ÃÎÊÍ¬Ò»¸öµ¥ÀıÀàµÄÇé¿öÊ±, ¿ÉÄÜ»á³öÏÖ¹²Ïí×ÊÔ´µÄ°²È«ÎÊÌâ
+#region æ½œåœ¨é—®é¢˜
+// 1. å¯èƒ½ä¼šæœ‰å‡ºç°åœ¨åˆ«çš„åœ°æ–¹ new() ä¸€ä¸ªå•ä¾‹ç±»çš„æƒ…å†µ, ä½†æ˜¯è¿™æ ·ä¼šç ´åå•ä¾‹çš„åŸåˆ™
+// 2. å¤šä¸ªçº¿ç¨‹åŒæ—¶è®¿é—®åŒä¸€ä¸ªå•ä¾‹ç±»çš„æƒ…å†µæ—¶, å¯èƒ½ä¼šå‡ºç°å…±äº«èµ„æºçš„å®‰å…¨é—®é¢˜
 #endregion
 
-#region ½â¾ö·½°¸
-// 1. ½«¸¸Àà±äÎª³éÏóÀà, ³éÏóÀàÊÇ²»ÄÜ±»newµÄ
-// 2. ¹æ¶¨, ¼Ì³Ğµ¥ÀıÄ£Ê½»ùÀàµÄÀà, ±ØĞëÏÔÊ½µØÊµÏÖË½ÓĞµÄÎŞ²Î¹¹Ôìº¯Êı
-// 3. ÔÚ»ùÀàÖĞÍ¨¹ı·´ÉäÀ´µ÷ÓÃË½ÓĞµÄÎŞ²Î¹¹Ôìº¯Êı, ÒÔ´ËÊµÀı»¯¶ÔÏó (Ê¹ÓÃTypeÀàµÄGetConstructor()·½·¨)
+#region è§£å†³æ–¹æ¡ˆ
+// 1. å°†çˆ¶ç±»å˜ä¸ºæŠ½è±¡ç±», æŠ½è±¡ç±»æ˜¯ä¸èƒ½è¢«newçš„
+// 2. è§„å®š, ç»§æ‰¿å•ä¾‹æ¨¡å¼åŸºç±»çš„ç±», å¿…é¡»æ˜¾å¼åœ°å®ç°ç§æœ‰çš„æ— å‚æ„é€ å‡½æ•°
+// 3. åœ¨åŸºç±»ä¸­é€šè¿‡åå°„æ¥è°ƒç”¨ç§æœ‰çš„æ— å‚æ„é€ å‡½æ•°, ä»¥æ­¤å®ä¾‹åŒ–å¯¹è±¡ (ä½¿ç”¨Typeç±»çš„GetConstructor()æ–¹æ³•)
 // ConstructorInfo constructor = typeof(T).GetConstructor(
-// BindingFlags.Instance | BindingFlags.NonPublic,  // ±íÊ¾³ÉÔ±Ë½ÓĞ·½·¨(Instance)ºÍ·Ç¹«¹²·½·¨(NonPublic): ÒòÎªÎŞ²Î¹¹Ôìº¯ÊıÊÇË½ÓĞµÄ
-// null,                                            // ±íÊ¾²»ĞèÒª°ó¶¨¶ÔÏó
-// Type.EmptyTypes,                                 // ±íÊ¾Ã»ÓĞ²ÎÊı
-// null);                                           // ±íÊ¾Ã»ÓĞ²ÎÊıĞŞÊÎ·û(Èçout, ref)
+// BindingFlags.Instance | BindingFlags.NonPublic,  // è¡¨ç¤ºæˆå‘˜ç§æœ‰æ–¹æ³•(Instance)å’Œéå…¬å…±æ–¹æ³•(NonPublic): å› ä¸ºæ— å‚æ„é€ å‡½æ•°æ˜¯ç§æœ‰çš„
+// null,                                            // è¡¨ç¤ºä¸éœ€è¦ç»‘å®šå¯¹è±¡
+// Type.EmptyTypes,                                 // è¡¨ç¤ºæ²¡æœ‰å‚æ•°
+// null);                                           // è¡¨ç¤ºæ²¡æœ‰å‚æ•°ä¿®é¥°ç¬¦(å¦‚out, ref)
 #endregion
 
 public abstract class BaseManager<T> where T: class // , new()
 {
     private static T instance;
 
-    // ÓÃÓÚ¼ÓËøµÄ¶ÔÏó
+    // ç”¨äºåŠ é”çš„å¯¹è±¡
     protected static readonly object lockObj = new object();
 
-    // Í¨¹ıÊôĞÔ»ñÈ¡ÊµÀı ÈÎÑ¡ÆäÒ»
+    // é€šè¿‡å±æ€§è·å–å®ä¾‹ ä»»é€‰å…¶ä¸€
     public static T Instance
     {
         get
@@ -51,7 +51,7 @@ public abstract class BaseManager<T> where T: class // , new()
                     {
                         // instance = new T();
 
-                        // ÀûÓÃ·´ÉäµÃµ½Ë½ÓĞµÄÎŞ²Î¹¹Ôìº¯Êı, ÒÔ´ËÊµÀı»¯¶ÔÏó
+                        // åˆ©ç”¨åå°„å¾—åˆ°ç§æœ‰çš„æ— å‚æ„é€ å‡½æ•°, ä»¥æ­¤å®ä¾‹åŒ–å¯¹è±¡
                         Type type = typeof(T);
                         ConstructorInfo info = type.GetConstructor(BindingFlags.Instance | BindingFlags.NonPublic,
                                                                     null,
@@ -72,7 +72,7 @@ public abstract class BaseManager<T> where T: class // , new()
         }
     }
 
-    // Í¨¹ı·½·¨»ñÈ¡ÊµÀı ÈÎÑ¡ÆäÒ»
+    // é€šè¿‡æ–¹æ³•è·å–å®ä¾‹ ä»»é€‰å…¶ä¸€
     //public static T GetInstance()
     //{
     //    if (instance == null)

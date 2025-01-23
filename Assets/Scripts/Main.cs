@@ -7,15 +7,15 @@ public class Main : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        #region ²»¼Ì³ĞMonoBehaviourµÄµ¥ÀıÄ£Ê½
+        #region ä¸ç»§æ‰¿MonoBehaviourçš„å•ä¾‹æ¨¡å¼
         TestMgr.Instance.TestLog();
         TestMgr2.Instance.TestLog();
-        // ×¢Òâ: ÓÉÓÚ¿ÉÒÔ×Ô¼ºÈ¥newÒ»¸öµ¥ÀıÄ£Ê½Àà¶ÔÏó, ÒÔÏÂÁ½¸ö²Ù×÷ÆÆ»µÁËµ¥ÀıÄ£Ê½µÄÎ¨Ò»ĞÔ(²»ÍÆ¼ö)
+        // æ³¨æ„: ç”±äºå¯ä»¥è‡ªå·±å»newä¸€ä¸ªå•ä¾‹æ¨¡å¼ç±»å¯¹è±¡, ä»¥ä¸‹ä¸¤ä¸ªæ“ä½œç ´åäº†å•ä¾‹æ¨¡å¼çš„å”¯ä¸€æ€§(ä¸æ¨è)
         // TestMgr t = new TestMgr(); 
-        // BaseManager<TestMgr> t2 = new BaseManager<TestMgr>(); 
+        // BaseManager<TestMgr> t2 = new BaseManager<TestMgr>();
         #endregion
 
-        #region ¼Ì³ĞMonoBehaviourµÄµ¥ÀıÄ£Ê½
+        #region ç»§æ‰¿MonoBehaviourçš„å•ä¾‹æ¨¡å¼
         Test2Mgr.Instance.TestLog();
         Test2Mgr2.Instance.TestLog();
         #endregion

@@ -3,10 +3,10 @@ using System.Collections.Generic;
 using UnityEngine;
 
 /// <summary>
-/// ×Ô¶¯¹ÒÔØÊ½µÄ¼Ì³ÐMonoBehaviourµÄµ¥ÀýÄ£Ê½»ùÀà
-/// 1. ÎÞÐèÊÖ¶¯¹ÒÔØ(ÇëÎðÊÖ¶¯¹ÒÔØ)
-/// 2. ÎÞÐè¶¯Ì¬Ìí¼Ó
-/// 3. ÎÞÐè¹ØÐÄÇÐ»»³¡¾°´øÀ´µÄÎÊÌâ
+/// è‡ªåŠ¨æŒ‚è½½å¼çš„ç»§æ‰¿MonoBehaviourçš„å•ä¾‹æ¨¡å¼åŸºç±»
+/// 1. æ— éœ€æ‰‹åŠ¨æŒ‚è½½(è¯·å‹¿æ‰‹åŠ¨æŒ‚è½½)
+/// 2. æ— éœ€åŠ¨æ€æ·»åŠ 
+/// 3. æ— éœ€å…³å¿ƒåˆ‡æ¢åœºæ™¯å¸¦æ¥çš„é—®é¢˜
 /// </summary>
 /// <typeparam name="T"></typeparam>
 
@@ -20,14 +20,14 @@ public class SingletonAutoMono<T> : MonoBehaviour where T : MonoBehaviour
         {
             if (instance == null)
             {
-                #region ¶¯Ì¬´´½¨ ¶¯Ì¬¹ÒÔØ
-                // ÔÚ³¡¾°ÉÏ´´½¨Ò»¸ö¿ÕµÄGameObject
+                #region åŠ¨æ€åˆ›å»º åŠ¨æ€æŒ‚è½½
+                // åœ¨åœºæ™¯ä¸Šåˆ›å»ºä¸€ä¸ªç©ºçš„GameObject
                 GameObject obj = new GameObject();
-                // ÉèÖÃ¸ÃGameObjectµÄÃû×Ö(ÀàÃû)
+                // è®¾ç½®è¯¥GameObjectçš„åå­—(ç±»å)
                 obj.name = typeof(T).ToString();
-                // ¶¯Ì¬¹ÒÔØ¶ÔÓ¦µÄµ¥ÀýÄ£Ê½½Å±¾
+                // åŠ¨æ€æŒ‚è½½å¯¹åº”çš„å•ä¾‹æ¨¡å¼è„šæœ¬
                 instance = obj.AddComponent<T>();
-                // ¹ý³¡¾°ÇÐ»»Ê±²»Ïú»Ù, ±£Ö¤ÔÚÕû¸öÓÎÏ·ÉúÃüÖÜÆÚÖÐ¶¼´æÔÚ
+                // è¿‡åœºæ™¯åˆ‡æ¢æ—¶ä¸é”€æ¯, ä¿è¯åœ¨æ•´ä¸ªæ¸¸æˆç”Ÿå‘½å‘¨æœŸä¸­éƒ½å­˜åœ¨
                 DontDestroyOnLoad(obj);
                 #endregion
             }
